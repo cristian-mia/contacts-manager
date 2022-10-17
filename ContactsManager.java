@@ -4,6 +4,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class ContactsManager {
+    // Create Path
     public static void createPaths() throws IOException {
         // Get Current Directory
         String pwd = System.getProperty("user.dir");
