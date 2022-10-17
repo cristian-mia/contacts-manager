@@ -58,8 +58,6 @@ public class ContactsManager {
         Files.write(dataFile, strings);
     }
 
-
-
     public void addContact() throws IOException {
         // Get contact info
         System.out.print("Name: ");
@@ -96,6 +94,13 @@ public class ContactsManager {
         }
     }
 
-
-
+    public void findContacts(){
+        System.out.print("Name to find: ");
+        String findContact = sc.nextLine();
+        for(Contacts contact : contactsList) {
+            if (contact.getName().toLowerCase().contains(findContact.toLowerCase())) {
+                System.out.println((contact.getName() + " | " + contact.getNumber()));
+            }
+        }
+    }
 }
