@@ -9,7 +9,10 @@ import java.util.Scanner;
 
 public class ContactsManager {
     //Variables
+    private Contacts contact;
     private Path dataFile;
+    Scanner sc = new Scanner(System.in);
+
 
     // Constructor
     public ContactsManager() throws IOException {
@@ -35,15 +38,17 @@ public class ContactsManager {
 
     // Methods
     public void addContact() throws IOException {
-        Scanner sc = new Scanner(System.in);
-        // Add a Contact
+        // Get contact info
         System.out.print("Name: ");
         String name = sc.nextLine();
         System.out.print("Number: ");
         String number = sc.nextLine();
+        // Create contact object
+        contact = new Contacts(name, number);
+        // Write contact to database
         Files.write(
             Paths.get(String.valueOf(dataFile)),
-            List.of(name + " " + number), // list with one item
+            List.of(contact.getName() + " " + contact.getNumber()), // list with one item
             StandardOpenOption.APPEND
         );
     }
