@@ -23,21 +23,13 @@ public class ContactsApplication {
             int option = sc.nextInt();
 
             switch (option) {
-                case 1: myContacts.viewContacts();
-                break;
-                case 2: myContacts.addContact();
-                break;
-                case 3: myContacts.findContacts();
-                break;
-                case 4: myContacts.deleteContacts();
-                break;
-                case 5: doMore = false;
-                break;
+                case 1: myContacts.viewContacts(); break;
+                case 2: myContacts.addContact(); break;
+                case 3: myContacts.findContacts(); break;
+                case 4: myContacts.deleteContacts(); break;
+                case 5: doMore = false; break;
             }
         }
         myContacts.writeData();
     }
-
-
-
 }

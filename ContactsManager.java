@@ -62,24 +62,30 @@ public class ContactsManager {
         // Get contact info
         System.out.print("Name: ");
         String name = sc.nextLine();
-        System.out.print("Number: ");
-        String number = sc.nextLine();
-        // Create contact object
-        contact = new Contacts(name, number);
-        // Write contact to database
-        Files.write(
-            Paths.get(String.valueOf(dataFile)),
-            List.of(contact.getName() + " | " + contact.getNumber()), // list with one item
-            StandardOpenOption.APPEND
-        );
-        loadData();
+        // Check for existing contact
+        boolean makeContact = checkName(name);
+        if (makeContact) {
+            System.out.print("Number: ");
+            String number = sc.nextLine();
+            // Create contact object
+            contact = new Contacts(name, number);
+            // Write contact to database
+            Files.write(
+                    Paths.get(String.valueOf(dataFile)),
+                    List.of(contact.getName() + " | " + contact.getNumber()), // list with one item
+                    StandardOpenOption.APPEND
+            );
+            loadData();
+        } else {
+            System.out.println("Canceled.");
+        }
     }
 
-    //View contact info
     public void viewContacts() throws IOException{
-        System.out.printf("%-20s | %-20s%n", "Name", "Number");
+        System.out.printf("%-12s | %-12s |%n", "Name", "Number");
+        System.out.println("----------------------------");
         for(Contacts contact : contactsList){
-            System.out.printf("%-20s | %-20s%n", contact.getName(), contact.getNumber());
+            System.out.printf("%-12s | %-12s |%n", contact.getName(), formatNumber(contact.getNumber()));
         }
     }
 
@@ -102,5 +108,24 @@ public class ContactsManager {
                 System.out.println((contact.getName() + " | " + contact.getNumber()));
             }
         }
+    }
+
+    private String formatNumber(String number){
+        if (number.length() >= 9 ){
+            return "(" + number.substring(0,3) + ")" + number.substring(3,6) + "-" + number.substring(6);
+        } else {
+            return number.substring(0,3) + "-" + number.substring(3);
+        }
+    }
+
+    private boolean checkName(String name){
+        for(Contacts contact : contactsList) {
+            if (contact.getName().toLowerCase().contains(name.toLowerCase())) {
+                System.out.printf("There's already a contact named %s. Do you want to continue? (y/n) ", name);
+                String answer = sc.nextLine();
+                return answer.toLowerCase().startsWith("y");
+            }
+        }
+        return true;
     }
 }
