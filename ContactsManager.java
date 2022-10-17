@@ -15,8 +15,6 @@ public class ContactsManager {
     private Path dataFile;
     Scanner sc = new Scanner(System.in);
     private List<Contacts> contactsList;
-    private List<String> strings;
-
 
     // Constructor
     public ContactsManager() throws IOException {
@@ -40,16 +38,28 @@ public class ContactsManager {
         }
 
         contactsList = new ArrayList<>();
-
-        for(String string : Files.readAllLines(dataFile)){
-           String[] arrOfStr = string.split(Pattern.quote(" | "));
-           Contacts newContact = new Contacts(arrOfStr[0], arrOfStr[1]);
-           contactsList.add(newContact);
-        }
-        System.out.println(contactsList);
+        loadData();
     }
 
     // Methods
+    public void loadData() throws IOException {
+        for(String string : Files.readAllLines(dataFile)){
+            String[] arrOfStr = string.split(Pattern.quote(" | "));
+            Contacts newContact = new Contacts(arrOfStr[0], arrOfStr[1]);
+            contactsList.add(newContact);
+        }
+    }
+
+    public void writeData() throws IOException {
+        List<String> strings = new ArrayList<>();
+        for(Contacts contact : contactsList){
+            strings.add(contact.getName() + " | " + contact.getNumber());
+        }
+        Files.write(dataFile, strings);
+    }
+
+
+
     public void addContact() throws IOException {
         // Get contact info
         System.out.print("Name: ");
@@ -64,28 +74,28 @@ public class ContactsManager {
             List.of(contact.getName() + " | " + contact.getNumber()), // list with one item
             StandardOpenOption.APPEND
         );
+        loadData();
     }
 
     //View contact info
     public void viewContacts() throws IOException{
-        System.out.println("Name | Phone Number\n -----------------");
-        for(String string : Files.readAllLines(dataFile)){
-            System.out.println(string);
+        System.out.printf("%-20s | %-20s%n", "Name", "Number");
+        for(Contacts contact : contactsList){
+            System.out.printf("%-20s | %-20s%n", contact.getName(), contact.getNumber());
         }
     }
 
-    public void deleteContacts(){
-        System.out.print("Name: ");
+    public void deleteContacts() throws IOException {
+        System.out.print("Name to Delete: ");
         String findContact = sc.nextLine();
         for(Contacts contact : contactsList){
-            if(contact.getName().toLowerCase().equals(findContact.toLowerCase())){
-//                System.out.println(contactsList.indexOf(contact));
-                int index = contactsList.indexOf(contact);
-                contactsList.remove(index);
+            if(contact.getName().toLowerCase().contains(findContact.toLowerCase())){
+                contactsList.remove(contact);
                 break;
             }
-
         }
-
     }
+
+
+
 }
