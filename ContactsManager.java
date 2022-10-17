@@ -12,6 +12,8 @@ public class ContactsManager {
     private Contacts contact;
     private Path dataFile;
     Scanner sc = new Scanner(System.in);
+    private List<Contacts> contactsList;
+    private List<String> strings;
 
 
     // Constructor
@@ -48,9 +50,17 @@ public class ContactsManager {
         // Write contact to database
         Files.write(
             Paths.get(String.valueOf(dataFile)),
-            List.of(contact.getName() + " " + contact.getNumber()), // list with one item
+            List.of(contact.getName() + " | " + contact.getNumber()), // list with one item
             StandardOpenOption.APPEND
         );
     }
 
+    //View contact info
+    public void viewContacts() throws IOException{
+        strings = Files.readAllLines(dataFile);
+        System.out.println("Name | Phone Number\n -----------------");
+        for(String string : strings){
+            System.out.println(string);
+        }
+    }
 }

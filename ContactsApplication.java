@@ -10,6 +10,7 @@ public class ContactsApplication {
     public static void main(String[] args) throws IOException {
         myContacts = new ContactsManager();
         myContacts.addContact();
+        myContacts.viewContacts();
     }
 
 
