@@ -4,11 +4,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 public class ContactsApplication {
-    public static void main(String[] args) throws IOException {
+    public void main(String[] args) throws IOException {
         Contacts newContact = new Contacts("name", "number");
         newContact.getName();
         newContact.setName("Cris");
 
-        ContactsManager.createPaths();
+        ContactsManager myContacts = new ContactsManager();
     }
 }
