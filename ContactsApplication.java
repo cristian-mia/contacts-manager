@@ -11,6 +11,7 @@ public class ContactsApplication {
         myContacts = new ContactsManager();
         myContacts.addContact();
         myContacts.viewContacts();
+        myContacts.deleteContacts();
     }
 
 

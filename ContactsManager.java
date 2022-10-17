@@ -3,9 +3,11 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class ContactsManager {
     //Variables
@@ -36,6 +38,15 @@ public class ContactsManager {
         if (! Files.exists(dataFile)) {
             Files.createFile(dataFile);
         }
+
+        contactsList = new ArrayList<>();
+
+        for(String string : Files.readAllLines(dataFile)){
+           String[] arrOfStr = string.split(Pattern.quote(" | "));
+           Contacts newContact = new Contacts(arrOfStr[0], arrOfStr[1]);
+           contactsList.add(newContact);
+        }
+        System.out.println(contactsList);
     }
 
     // Methods
@@ -57,10 +68,24 @@ public class ContactsManager {
 
     //View contact info
     public void viewContacts() throws IOException{
-        strings = Files.readAllLines(dataFile);
         System.out.println("Name | Phone Number\n -----------------");
-        for(String string : strings){
+        for(String string : Files.readAllLines(dataFile)){
             System.out.println(string);
         }
+    }
+
+    public void deleteContacts(){
+        System.out.print("Name: ");
+        String findContact = sc.nextLine();
+        for(Contacts contact : contactsList){
+            if(contact.getName().toLowerCase().equals(findContact.toLowerCase())){
+//                System.out.println(contactsList.indexOf(contact));
+                int index = contactsList.indexOf(contact);
+                contactsList.remove(index);
+                break;
+            }
+
+        }
+
     }
 }
