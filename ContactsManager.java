@@ -5,12 +5,13 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 public class ContactsManager {
     //Variables
     private Path dataFile;
 
-    // Create Path
+    // Constructor
     public ContactsManager() throws IOException {
         // Get Current Directory
         String pwd = System.getProperty("user.dir");
@@ -30,14 +31,21 @@ public class ContactsManager {
         if (! Files.exists(dataFile)) {
             Files.createFile(dataFile);
         }
-    } public static void addContact() throws IOException {
-
-        Files.write(
-                Paths.get("/data", "contacts.txt"),
-                List.of("eggs"), // list with one item
-                StandardOpenOption.APPEND
-        );
-
-
     }
+
+    // Methods
+    public void addContact() throws IOException {
+        Scanner sc = new Scanner(System.in);
+        // Add a Contact
+        System.out.print("Name: ");
+        String name = sc.nextLine();
+        System.out.print("Number: ");
+        String number = sc.nextLine();
+        Files.write(
+            Paths.get(String.valueOf(dataFile)),
+            List.of(name + " " + number), // list with one item
+            StandardOpenOption.APPEND
+        );
+    }
+
 }

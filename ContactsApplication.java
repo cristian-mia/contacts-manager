@@ -2,13 +2,15 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Scanner;
 
 public class ContactsApplication {
-    public void main(String[] args) throws IOException {
-        Contacts newContact = new Contacts("name", "number");
-        newContact.getName();
-        newContact.setName("Cris");
+    static ContactsManager myContacts;
 
-        ContactsManager myContacts = new ContactsManager();
+    public static void main(String[] args) throws IOException {
+        myContacts = new ContactsManager();
+        myContacts.addContact();
     }
+
+
 }
