@@ -1,14 +1,9 @@
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class ContactsApplication {
-    static ContactsManager myContacts;
-
     public static void main(String[] args) throws IOException {
-        myContacts = new ContactsManager();
+        ContactsManager.init();
         Scanner sc = new Scanner(System.in);
 
         boolean doMore = true;
@@ -23,13 +18,13 @@ public class ContactsApplication {
             int option = sc.nextInt();
 
             switch (option) {
-                case 1: myContacts.viewContacts(); break;
-                case 2: myContacts.addContact(); break;
-                case 3: myContacts.findContacts(); break;
-                case 4: myContacts.deleteContacts(); break;
+                case 1: ContactsManager.viewContacts(); break;
+                case 2: ContactsManager.addContact(); break;
+                case 3: ContactsManager.findContacts(); break;
+                case 4: ContactsManager.deleteContacts(); break;
                 case 5: doMore = false; break;
             }
         }
-        myContacts.writeData();
+        ContactsManager.writeData();
     }
 }
